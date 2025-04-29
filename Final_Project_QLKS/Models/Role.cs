@@ -8,15 +8,15 @@ public partial class Role
     public Role()
     {
         Users = new HashSet<User>();
-        Permissions = new HashSet<Permission>();
+        RolePermissions = new HashSet<RolePermission>();
     }
 
-
     public int RoleId { get; set; }
-
     public string RoleName { get; set; } = null!;
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<User> Users { get; set; }
+    public virtual ICollection<RolePermission> RolePermissions { get; set; }
 
-    public virtual ICollection<Permission> Permissions { get; set; } = new List<Permission>();
+    // Không cần map với EF - chỉ để truy cập thuận tiện
+    public ICollection<Permission> Permissions => RolePermissions.Select(rp => rp.Permission).ToList();
 }

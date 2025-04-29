@@ -8,14 +8,25 @@ namespace Final_Project_QLKS.Constants
 {
     public static class PermissionsKeys
     {
+        // Room
         public const string ViewRoom = "ViewRoom";
         public const string EditRoom = "EditRoom";
+
+        // User
         public const string ManageUsers = "ManageUsers";
+
+        // Booking
         public const string CreateBooking = "CreateBooking";
         public const string CancelBooking = "CancelBooking";
+
+        // Report
         public const string ViewReports = "ViewReports";
+
+        // Payment
         public const string ManagePayments = "ManagePayments";
-        public const string ManageBranches = "ManageBraches";
+
+        // Branch
+        public const string ManageBranches = "ManageBranches";
     }   
 
 

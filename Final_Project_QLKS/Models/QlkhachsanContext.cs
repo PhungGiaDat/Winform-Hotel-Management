@@ -208,6 +208,19 @@ public partial class QlkhachsanContext : DbContext
                 .HasConstraintName("FK__USERS__RoleId__5441852A");
         });
 
+        modelBuilder.Entity<RolePermission>()
+        .HasKey(rp => new { rp.RoleId, rp.PermissionId });
+
+        modelBuilder.Entity<RolePermission>()
+            .HasOne(rp => rp.Role)
+            .WithMany(r => r.RolePermissions)
+            .HasForeignKey(rp => rp.RoleId);
+
+        modelBuilder.Entity<RolePermission>()
+            .HasOne(rp => rp.Permission)
+            .WithMany(p => p.RolePermissions)
+            .HasForeignKey(rp => rp.PermissionId);
+
         OnModelCreatingPartial(modelBuilder);
     }
 

@@ -1,0 +1,18 @@
+﻿using Final_Project_QLKS.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Final_Project_QLKS.Views.Interfaces
+{
+    public interface ILoginView
+    {
+        string Username { get; }
+        string Password { get; }
+        void ShowMessage(string message);
+        void NavigateToDashboard(User user);
+
+    }
+}

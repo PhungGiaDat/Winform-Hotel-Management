@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Final_Project_QLKS.Models;
+using Final_Project_QLKS.Presenters;
+using Final_Project_QLKS.Repositorys;
+using Final_Project_QLKS.Services;
+using Final_Project_QLKS.Views.Interfaces;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-public partial class LoginForm : Form
+public partial class LoginForm : Form, ILoginView
 {
     private Panel loginPanel;
     private Label lblLogo;
@@ -13,11 +18,48 @@ public partial class LoginForm : Form
     private TextBox txtPassword;
     private Button btnLogin;
     private Label lblForgotPassword;
+    private LoginPresenter _presenter;
+
 
     public LoginForm()
     {
         InitializeComponent();
+
+        var context = new QlkhachsanContext();
+        var userRepo = new UserRepository(context);
+        var authService = new AuthorizationService(userRepo);
+
+        _presenter = new LoginPresenter(this, userRepo, authService);
     }
+
+    public void ShowMessage(string message)
+    {
+        MessageBox.Show(message);
+    }
+
+    public void NavigateToDashboard(User user)
+    {
+        this.Hide();
+        var dashboard = new MainDashboardForm(user.Role);
+        dashboard.Show();
+    }
+
+    private void btnLogin_Click(object sender, EventArgs e)
+    {
+        _presenter.HandleLogin();
+    }
+
+    private void lblUsername_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void lblPassword_Click(object sender, EventArgs e)
+    {
+
+    }
+
+
 
     private void InitializeComponent()
     {
@@ -72,6 +114,7 @@ public partial class LoginForm : Form
         btnLogin.TabIndex = 5;
         btnLogin.Text = "Login";
         btnLogin.UseVisualStyleBackColor = false;
+        btnLogin.Click += btnLogin_Click;
         // 
         // txtPassword
         // 
@@ -203,13 +246,5 @@ public partial class LoginForm : Form
         this.BackgroundImage = CreateGradientBackground();
     }
 
-    private void lblUsername_Click(object sender, EventArgs e)
-    {
 
-    }
-
-    private void lblPassword_Click(object sender, EventArgs e)
-    {
-
-    }
 }
