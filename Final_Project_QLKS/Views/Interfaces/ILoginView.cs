@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Final_Project_QLKS.Views.Interfaces
 {
-    public interface ILoginView
+    public interface ILoginView : IBaseView
     {
         string Username { get; }
         string Password { get; }
-        void ShowMessage(string message);
         void NavigateToDashboard(User user);
 
     }

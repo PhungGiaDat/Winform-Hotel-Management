@@ -1,4 +1,6 @@
-﻿using Final_Project_QLKS.Presenters.Interfaces;
+﻿using Final_Project_QLKS.Core;
+using Final_Project_QLKS.Presenters.Base;
+using Final_Project_QLKS.Presenters.Interfaces;
 using Final_Project_QLKS.Repositorys.Interfaces;
 using Final_Project_QLKS.Services.Interfaces;
 using Final_Project_QLKS.Views.Interfaces;
@@ -10,17 +12,16 @@ using System.Threading.Tasks;
 
 namespace Final_Project_QLKS.Presenters
 {
-    public class LoginPresenter : ILoginPresenter
+    public class LoginPresenter : BasePresenter<ILoginView>,ILoginPresenter
     {
         private readonly ILoginView _view;
         private readonly IUserRepository _userRepo;
         private readonly IAuthorizationService _authService;
 
         public LoginPresenter(ILoginView view, IUserRepository userRepository, IAuthorizationService authService)
+            : base(view,authService) // gọi view và auth từ base presenter
         {
-            _view = view;
-            _userRepo = userRepository;
-            _authService = authService;
+            _userRepo = userRepository;   
         }
 
         public void HandleLogin()
@@ -30,17 +31,21 @@ namespace Final_Project_QLKS.Presenters
 
             if (user == null || user.PasswordHash != _view.Password)
             {
-                _view.ShowMessage("Sai tên đăng nhập hoặc mật khẩu");
+                ShowMessage("Sai tên đăng nhập hoặc mật khẩu");
                 return;
             }
 
 
-            if (!_authService.IsAuthorized(user,"LOGIN"))
+            if (!_authService.IsLoggedIn(user))
             {
-                _view.ShowMessage("Bạn không có quyền đăng nhập");
+                ShowMessage("Vui lòng đăng nhập");
             }
 
-            _view.ShowMessage("Đăng nhập thành công.");
+            AppState.CurrentUser = user; // Gán user vào trong AppState
+            AppState.Login(user);
+
+            ShowMessage("Đăng nhập thành công.");
+            // Chuyển hướng đến Dashboard
             _view.NavigateToDashboard(user);
 
         }

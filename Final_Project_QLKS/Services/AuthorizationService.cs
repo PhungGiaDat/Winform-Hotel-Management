@@ -19,20 +19,15 @@ namespace Final_Project_QLKS.Services
             _userRepository = userRepository;
         }
 
-        public bool HasPermission(string username, string permissionKey)
+        public bool HasPermission(User user, string permissionKey)
         {
-            var user = _userRepository.GetWithRoleAndPermissions(username);
-            return user?.Role?.RolePermissions.Any(rp => rp.Permission.PermissionName == permissionKey) ?? false;
+            return user?.Role?.RolePermissions
+                   ?.Any(rp => rp.Permission.PermissionName == permissionKey)
+                   ?? false;
         }
-
-        public bool IsAuthorized(User user, string action)
+        public bool IsLoggedIn(User user)
         {
-            if (user == null || string.IsNullOrWhiteSpace(action))
-                return false;
-
-            return user.Role?.RolePermissions
-                       ?.Any(rp => rp.Permission.PermissionName == action)
-                       ?? false;
-        }
+            return user != null && user.Role != null && user.Role.RolePermissions?.Any() == true;
+        }   
     }
 }

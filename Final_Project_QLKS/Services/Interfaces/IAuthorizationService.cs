@@ -9,7 +9,7 @@ namespace Final_Project_QLKS.Services.Interfaces
 {
     public interface IAuthorizationService
     {
-        bool HasPermission(string username, string permissionsKey);
-        bool IsAuthorized(User user, string action);
+        bool HasPermission(User user, string permissionsKey);
+        bool IsLoggedIn(User user);
     }
 }
