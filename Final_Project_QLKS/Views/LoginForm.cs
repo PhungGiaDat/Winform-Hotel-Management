@@ -30,7 +30,12 @@ public partial class LoginForm : Form, ILoginView
         var authService = new AuthorizationService(userRepo);
 
         _presenter = new LoginPresenter(this, userRepo, authService);
+
     }
+
+    public string Username => txtUsername.Text.Trim();
+    public string Password => txtPassword.Text.Trim();
+
 
     public void ShowMessage(string message)
     {
@@ -40,7 +45,7 @@ public partial class LoginForm : Form, ILoginView
     public void NavigateToDashboard(User user)
     {
         this.Hide();
-        var dashboard = new MainDashboardForm(user.Role);
+        var dashboard = new MainDashboardForm(user.Role.RoleName);
         dashboard.Show();
     }
 

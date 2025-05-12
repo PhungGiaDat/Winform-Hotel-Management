@@ -1,3 +1,6 @@
+using Final_Project_QLKS.Core.Seeding;
+using Final_Project_QLKS.Models;
+
 namespace Final_Project_QLKS
 {
     internal static class Program
@@ -13,8 +16,11 @@ namespace Final_Project_QLKS
             ApplicationConfiguration.Initialize();
 
             // Pass the required 'role' argument to the MainDashboardForm constructor
-            string userRole = "Receptionist"; // Replace with the appropriate role
-            Application.Run(new MainDashboardForm(userRole));
+
+            var context = new QlkhachsanContext();
+            DatabaseSeeder.SeedOnce(context);
+
+            Application.Run(new LoginForm());
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Final_Project_QLKS.Core
+namespace Final_Project_QLKS.Core.Constants
 {
     public static class RoleKeys
     {

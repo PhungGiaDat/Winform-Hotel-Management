@@ -29,9 +29,16 @@ namespace Final_Project_QLKS.Presenters
             var user = _userRepo.GetWithRoleAndPermissions(_view.Username);
 
 
-            if (user == null || user.PasswordHash != _view.Password)
+            if (user != null || user.PasswordHash == _view.Password)
             {
-                ShowMessage("Sai tên đăng nhập hoặc mật khẩu");
+                AppState.CurrentUser = user; // Gán user vào trong AppState
+                AppState.Login(user);
+                _view.NavigateToDashboard(user);
+            }
+
+            else
+            {
+                ShowMessage("Tên đăng nhập hoặc mật khẩu không đúng");
                 return;
             }
 
@@ -40,13 +47,8 @@ namespace Final_Project_QLKS.Presenters
             {
                 ShowMessage("Vui lòng đăng nhập");
             }
-
-            AppState.CurrentUser = user; // Gán user vào trong AppState
-            AppState.Login(user);
-
             ShowMessage("Đăng nhập thành công.");
-            // Chuyển hướng đến Dashboard
-            _view.NavigateToDashboard(user);
+        
 
         }
     }
