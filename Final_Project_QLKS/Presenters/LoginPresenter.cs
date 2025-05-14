@@ -9,14 +9,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Final_Project_QLKS.Presenters
 {
     public class LoginPresenter : BasePresenter<ILoginView>,ILoginPresenter
     {
-        private readonly ILoginView _view;
+
+        //private readonly ILoginView _view;
         private readonly IUserRepository _userRepo;
-        private readonly IAuthorizationService _authService;
+        //private readonly IAuthorizationService _authService;
 
         public LoginPresenter(ILoginView view, IUserRepository userRepository, IAuthorizationService authService)
             : base(view,authService) // gọi view và auth từ base presenter
@@ -26,30 +28,47 @@ namespace Final_Project_QLKS.Presenters
 
         public void HandleLogin()
         {
-            var user = _userRepo.GetWithRoleAndPermissions(_view.Username);
+            var hashed = new PasswordHasher<string>();
 
-
-            if (user != null || user.PasswordHash == _view.Password)
+            if (_view == null)
             {
-                AppState.CurrentUser = user; // Gán user vào trong AppState
-                AppState.Login(user);
-                _view.NavigateToDashboard(user);
+                ShowMessage("View is not initialized.");
+                return;
             }
 
-            else
+            if (string.IsNullOrEmpty(_view.Username))
+            {
+                ShowMessage("Tên đăng nhập không được để trống");
+                return;
+            }
+
+            var user = _userRepo?.GetWithRoleAndPermissions(_view.Username);
+            if (user == null)
             {
                 ShowMessage("Tên đăng nhập hoặc mật khẩu không đúng");
                 return;
             }
 
+            // Print debug info
+            Console.WriteLine($"Username: {_view.Username}");
+            Console.WriteLine($"Stored PasswordHash: {user.PasswordHash}");
+            Console.WriteLine($"Input Password: {_view.Password}");
 
-            if (!_authService.IsLoggedIn(user))
+            // Correct way to verify password using PasswordHasher
+            var result = hashed.VerifyHashedPassword(_view.Username, user.PasswordHash, _view.Password);
+            Console.WriteLine($"Password verification result: {result}");
+
+            if (result == PasswordVerificationResult.Failed)
             {
-                ShowMessage("Vui lòng đăng nhập");
+                ShowMessage("Tên đăng nhập hoặc mật khẩu không đúng");
+                return;
             }
-            ShowMessage("Đăng nhập thành công.");
-        
 
+            AppState.CurrentUser = user;
+            AppState.Login(user);
+            _view.NavigateToDashboard(user);
+            ShowMessage("Đăng nhập thành công.");
         }
+
     }
 }

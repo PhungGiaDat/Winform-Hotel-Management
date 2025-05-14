@@ -17,13 +17,13 @@ namespace Final_Project_QLKS.Repositorys
         {
             return _dbSet.FirstOrDefault(user => user.Username == username);
         }
-
         public User? GetWithRoleAndPermissions(string username)
         {
-            // Dùng include của Entity Framework để lấy thông tin Role và Permissions liên quan đến User
-            return _dbSet.Include(user => user.Role)
-                          .ThenInclude(rp => rp.Permissions)
-                          .FirstOrDefault(user => user.Username == username);// trả về user có username tương ứng ngược lại trả về null
+            return _dbSet
+                .Include(user => user.Role)
+                    .ThenInclude(role => role.RolePermissions)
+                        .ThenInclude(rp => rp.Permission)
+                .FirstOrDefault(user => user.Username == username);
         }
     }
 }

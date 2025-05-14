@@ -27,6 +27,10 @@ namespace Final_Project_QLKS.Core.Constants
 
         // Branch
         public const string ManageBranches = "ManageBranches";
+
+        // Order
+        public const string ViewOrder = "ViewOrder";
+
     }
 
 

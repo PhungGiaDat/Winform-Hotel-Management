@@ -1,5 +1,6 @@
 using Final_Project_QLKS.Core.Seeding;
 using Final_Project_QLKS.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Final_Project_QLKS
 {
@@ -16,9 +17,21 @@ namespace Final_Project_QLKS
             ApplicationConfiguration.Initialize();
 
             // Pass the required 'role' argument to the MainDashboardForm constructor
-
             var context = new QlkhachsanContext();
-            DatabaseSeeder.SeedOnce(context);
+
+            // Show the actual database name being used
+            var dbName = context.Database.GetDbConnection().Database;
+            MessageBox.Show($"Seeding database: {dbName}");
+
+            try
+            {
+                DatabaseSeeder.SeedOnce(context);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Seeding Error");
+            }
+
 
             Application.Run(new LoginForm());
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagementSystem.Views;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -8,19 +9,17 @@ public partial class MainDashboardForm : Form
     private Panel navPanel;
     private Label lblTitle;
     private Button btnBranchManagement;
-    private Button btnRoomManagement;
-    private Button btnBooking;
     private Button btnCustomerManagement;
-    private Button btnServiceOrder;
     private Button btnReport;
     private Button btnRoleManagement;
+    private Button btnServiceManagement;
     private Button btnLogout;
     private Panel summaryPanel;
     private Label lblAvailableRooms;
     private Label lblBookingsToday;
 
-    // Giả lập vai trò người dùng (Admin, Receptionist, Customer)
-    private string userRole = "Admin"; // Thay đổi giá trị này dựa trên đăng nhập thực tế
+    // Simulated user role (should be set based on actual login)
+    private string userRole = "Admin"; // Change this based on actual login
 
     public MainDashboardForm(string role)
     {
@@ -34,29 +33,25 @@ public partial class MainDashboardForm : Form
         btnLogout = new Button();
         btnRoleManagement = new Button();
         btnReport = new Button();
-        btnServiceOrder = new Button();
+        btnServiceManagement = new Button();
         btnCustomerManagement = new Button();
-        btnBooking = new Button();
-        btnRoomManagement = new Button();
         btnBranchManagement = new Button();
         lblTitle = new Label();
         summaryPanel = new Panel();
         lblBookingsToday = new Label();
         lblAvailableRooms = new Label();
+
         navPanel.SuspendLayout();
         summaryPanel.SuspendLayout();
         SuspendLayout();
-        // 
+
         // navPanel
-        // 
         navPanel.BackColor = Color.FromArgb(25, 118, 210);
         navPanel.Controls.Add(btnLogout);
         navPanel.Controls.Add(btnRoleManagement);
         navPanel.Controls.Add(btnReport);
-        navPanel.Controls.Add(btnServiceOrder);
+        navPanel.Controls.Add(btnServiceManagement);
         navPanel.Controls.Add(btnCustomerManagement);
-        navPanel.Controls.Add(btnBooking);
-        navPanel.Controls.Add(btnRoomManagement);
         navPanel.Controls.Add(btnBranchManagement);
         navPanel.Controls.Add(lblTitle);
         navPanel.Location = new Point(0, 0);
@@ -64,9 +59,8 @@ public partial class MainDashboardForm : Form
         navPanel.Name = "navPanel";
         navPanel.Size = new Size(325, 1058);
         navPanel.TabIndex = 0;
-        // 
+
         // btnLogout
-        // 
         btnLogout.BackColor = Color.FromArgb(239, 83, 80);
         btnLogout.FlatAppearance.BorderSize = 0;
         btnLogout.FlatStyle = FlatStyle.Flat;
@@ -79,114 +73,78 @@ public partial class MainDashboardForm : Form
         btnLogout.TabIndex = 8;
         btnLogout.Text = "Logout";
         btnLogout.UseVisualStyleBackColor = false;
-        // 
-        // btnRoleManagement
-        // 
+
+        // btnRoleManagement (Quản lý nhân viên)
         btnRoleManagement.BackColor = Color.FromArgb(255, 152, 0);
         btnRoleManagement.FlatAppearance.BorderSize = 0;
         btnRoleManagement.FlatStyle = FlatStyle.Flat;
         btnRoleManagement.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
         btnRoleManagement.ForeColor = Color.White;
-        btnRoleManagement.Location = new Point(16, 700);
+        btnRoleManagement.Location = new Point(16, 500);
         btnRoleManagement.Margin = new Padding(5, 6, 5, 6);
         btnRoleManagement.Name = "btnRoleManagement";
         btnRoleManagement.Size = new Size(292, 80);
         btnRoleManagement.TabIndex = 7;
-        btnRoleManagement.Text = "Role Management";
+        btnRoleManagement.Text = "Quản lý nhân viên";
         btnRoleManagement.UseVisualStyleBackColor = false;
-        // 
+
         // btnReport
-        // 
         btnReport.BackColor = Color.FromArgb(255, 152, 0);
         btnReport.FlatAppearance.BorderSize = 0;
         btnReport.FlatStyle = FlatStyle.Flat;
         btnReport.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
         btnReport.ForeColor = Color.White;
-        btnReport.Location = new Point(16, 600);
+        btnReport.Location = new Point(16, 400);
         btnReport.Margin = new Padding(5, 6, 5, 6);
         btnReport.Name = "btnReport";
         btnReport.Size = new Size(292, 80);
         btnReport.TabIndex = 6;
-        btnReport.Text = "Report";
+        btnReport.Text = "Báo cáo";
         btnReport.UseVisualStyleBackColor = false;
-        // 
-        // btnServiceOrder
-        // 
-        btnServiceOrder.BackColor = Color.FromArgb(255, 152, 0);
-        btnServiceOrder.FlatAppearance.BorderSize = 0;
-        btnServiceOrder.FlatStyle = FlatStyle.Flat;
-        btnServiceOrder.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-        btnServiceOrder.ForeColor = Color.White;
-        btnServiceOrder.Location = new Point(16, 500);
-        btnServiceOrder.Margin = new Padding(5, 6, 5, 6);
-        btnServiceOrder.Name = "btnServiceOrder";
-        btnServiceOrder.Size = new Size(292, 80);
-        btnServiceOrder.TabIndex = 5;
-        btnServiceOrder.Text = "Service Order";
-        btnServiceOrder.UseVisualStyleBackColor = false;
-        // 
+
+        // btnServiceManagement (Quản lý dịch vụ)
+        btnServiceManagement.BackColor = Color.FromArgb(255, 152, 0);
+        btnServiceManagement.FlatAppearance.BorderSize = 0;
+        btnServiceManagement.FlatStyle = FlatStyle.Flat;
+        btnServiceManagement.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+        btnServiceManagement.ForeColor = Color.White;
+        btnServiceManagement.Location = new Point(16, 600);
+        btnServiceManagement.Margin = new Padding(5, 6, 5, 6);
+        btnServiceManagement.Name = "btnServiceManagement";
+        btnServiceManagement.Size = new Size(292, 80);
+        btnServiceManagement.TabIndex = 9;
+        btnServiceManagement.Text = "Quản lý dịch vụ";
+        btnServiceManagement.UseVisualStyleBackColor = false;
+
         // btnCustomerManagement
-        // 
         btnCustomerManagement.BackColor = Color.FromArgb(255, 152, 0);
         btnCustomerManagement.FlatAppearance.BorderSize = 0;
         btnCustomerManagement.FlatStyle = FlatStyle.Flat;
         btnCustomerManagement.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
         btnCustomerManagement.ForeColor = Color.White;
-        btnCustomerManagement.Location = new Point(16, 400);
+        btnCustomerManagement.Location = new Point(16, 300);
         btnCustomerManagement.Margin = new Padding(5, 6, 5, 6);
         btnCustomerManagement.Name = "btnCustomerManagement";
         btnCustomerManagement.Size = new Size(292, 80);
         btnCustomerManagement.TabIndex = 4;
-        btnCustomerManagement.Text = "Customer Management";
+        btnCustomerManagement.Text = "Quản lý khách hàng";
         btnCustomerManagement.UseVisualStyleBackColor = false;
-        // 
-        // btnBooking
-        // 
-        btnBooking.BackColor = Color.FromArgb(255, 152, 0);
-        btnBooking.FlatAppearance.BorderSize = 0;
-        btnBooking.FlatStyle = FlatStyle.Flat;
-        btnBooking.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-        btnBooking.ForeColor = Color.White;
-        btnBooking.Location = new Point(16, 300);
-        btnBooking.Margin = new Padding(5, 6, 5, 6);
-        btnBooking.Name = "btnBooking";
-        btnBooking.Size = new Size(292, 80);
-        btnBooking.TabIndex = 3;
-        btnBooking.Text = "Booking";
-        btnBooking.UseVisualStyleBackColor = false;
-        // 
-        // btnRoomManagement
-        // 
-        btnRoomManagement.BackColor = Color.FromArgb(255, 152, 0);
-        btnRoomManagement.FlatAppearance.BorderSize = 0;
-        btnRoomManagement.FlatStyle = FlatStyle.Flat;
-        btnRoomManagement.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-        btnRoomManagement.ForeColor = Color.White;
-        btnRoomManagement.Location = new Point(16, 200);
-        btnRoomManagement.Margin = new Padding(5, 6, 5, 6);
-        btnRoomManagement.Name = "btnRoomManagement";
-        btnRoomManagement.Size = new Size(292, 80);
-        btnRoomManagement.TabIndex = 2;
-        btnRoomManagement.Text = "Room Management";
-        btnRoomManagement.UseVisualStyleBackColor = false;
-        // 
+
         // btnBranchManagement
-        // 
         btnBranchManagement.BackColor = Color.FromArgb(255, 152, 0);
         btnBranchManagement.FlatAppearance.BorderSize = 0;
         btnBranchManagement.FlatStyle = FlatStyle.Flat;
         btnBranchManagement.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
         btnBranchManagement.ForeColor = Color.White;
-        btnBranchManagement.Location = new Point(16, 100);
+        btnBranchManagement.Location = new Point(16, 200);
         btnBranchManagement.Margin = new Padding(5, 6, 5, 6);
         btnBranchManagement.Name = "btnBranchManagement";
         btnBranchManagement.Size = new Size(292, 80);
         btnBranchManagement.TabIndex = 1;
-        btnBranchManagement.Text = "Branch Management";
+        btnBranchManagement.Text = "Quản lý chi nhánh";
         btnBranchManagement.UseVisualStyleBackColor = false;
-        // 
+
         // lblTitle
-        // 
         lblTitle.Font = new Font("Century Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
         lblTitle.ForeColor = Color.White;
         lblTitle.Location = new Point(16, 20);
@@ -196,9 +154,8 @@ public partial class MainDashboardForm : Form
         lblTitle.TabIndex = 0;
         lblTitle.Text = "Dashboard";
         lblTitle.TextAlign = ContentAlignment.MiddleCenter;
-        // 
+
         // summaryPanel
-        // 
         summaryPanel.BackColor = Color.White;
         summaryPanel.BorderStyle = BorderStyle.FixedSingle;
         summaryPanel.Controls.Add(lblBookingsToday);
@@ -208,9 +165,8 @@ public partial class MainDashboardForm : Form
         summaryPanel.Name = "summaryPanel";
         summaryPanel.Size = new Size(974, 298);
         summaryPanel.TabIndex = 1;
-        // 
+
         // lblBookingsToday
-        // 
         lblBookingsToday.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         lblBookingsToday.ForeColor = Color.FromArgb(33, 33, 33);
         lblBookingsToday.Location = new Point(32, 160);
@@ -219,9 +175,8 @@ public partial class MainDashboardForm : Form
         lblBookingsToday.Size = new Size(910, 60);
         lblBookingsToday.TabIndex = 1;
         lblBookingsToday.Text = "Bookings Today: 5";
-        // 
+
         // lblAvailableRooms
-        // 
         lblAvailableRooms.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         lblAvailableRooms.ForeColor = Color.FromArgb(33, 33, 33);
         lblAvailableRooms.Location = new Point(32, 60);
@@ -230,9 +185,8 @@ public partial class MainDashboardForm : Form
         lblAvailableRooms.Size = new Size(910, 60);
         lblAvailableRooms.TabIndex = 0;
         lblAvailableRooms.Text = "Available Rooms: 10";
-        // 
+
         // MainDashboardForm
-        // 
         AutoScaleDimensions = new SizeF(13F, 32F);
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = Color.White;
@@ -254,59 +208,90 @@ public partial class MainDashboardForm : Form
 
     private void MainDashboardForm_Load(object sender, EventArgs e)
     {
-        // Thêm hiệu ứng và gradient
+        // Gradient background
         this.BackgroundImage = CreateGradientBackground();
 
-        // Thêm hiệu ứng hover cho các nút
+        // Hover effects
         AddHoverEffect(btnBranchManagement);
-        AddHoverEffect(btnRoomManagement);
-        AddHoverEffect(btnBooking);
         AddHoverEffect(btnCustomerManagement);
-        AddHoverEffect(btnServiceOrder);
         AddHoverEffect(btnReport);
         AddHoverEffect(btnRoleManagement);
+        AddHoverEffect(btnServiceManagement);
         AddHoverEffect(btnLogout, "#EF5350", "#E53935");
 
-        // Cập nhật tóm tắt (dữ liệu giả lập)
+        // Update summary (mock data)
         UpdateSummary();
 
-        // Sự kiện Click cho các nút
-        btnRoomManagement.Click += (s, e) =>
+        // Button click events (replace with your actual form classes)
+        btnBranchManagement.Click += (s, e) =>
         {
             this.Hide();
-            RoomManagementForm roomManagement = new RoomManagementForm(userRole);
-            roomManagement.ShowDialog();
-            this.Close();
+            using (var form = new BranchManagementForm())
+            {
+                form.ShowDialog();
+            }
+            this.Show();
         };
-
-        btnBooking.Click += (s, e) =>
+        btnCustomerManagement.Click += (s, e) =>
         {
             this.Hide();
-            BookingForm booking = new BookingForm(userRole);
-            booking.ShowDialog();
-            this.Close();
+            using (var form = new CustomerForm())
+            {
+                form.ShowDialog();
+            }
+            this.Show();
         };
-
-        //btnReport.Click += (s, e) =>
-        //{
-        //    this.Hide();
-        //    ReportForm report = new ReportForm(userRole);
-        //    report.ShowDialog();
-        //    this.Close();
-        //};
-
-        btnServiceOrder.Click += (s, e) =>
+        btnReport.Click += (s, e) =>
         {
             this.Hide();
-            ServiceOrderForm serviceOrder = new ServiceOrderForm(userRole);
-            serviceOrder.ShowDialog();
-            this.Close();
+            using (var form = new ReportForm())
+            {
+                form.ShowDialog();
+            }
+            this.Show();
         };
-
-        btnLogout.Click += (s, e) =>
+        btnRoleManagement.Click += (s, e) =>
         {
-            this.Close();
+            this.Hide();
+            using (var form = new ManagementForm())
+            {
+                form.ShowDialog();
+            }
+            this.Show();
         };
+        btnServiceManagement.Click += (s, e) =>
+        {
+            this.Hide();
+            using (var form = new ServiceManagementForm(userRole))
+            {
+                form.ShowDialog();
+            }
+            this.Show();
+        };
+        btnLogout.Click += (s, e) => { this.Close(); };
+
+        // Hide all by default, show only for Manager with permission
+        ConfigureButtonsByRole();
+    }
+
+    private void ConfigureButtonsByRole()
+    {
+        // Hide all management buttons by default
+        btnBranchManagement.Visible = false;
+        btnCustomerManagement.Visible = false;
+        btnReport.Visible = false;
+        btnRoleManagement.Visible = false;
+        btnServiceManagement.Visible = false;
+
+        // Example: Only show for Manager role (replace with your permission logic)
+        if (userRole == "Manager")
+        {
+            btnBranchManagement.Visible = true;
+            btnCustomerManagement.Visible = true;
+            btnReport.Visible = true;
+            btnRoleManagement.Visible = true;
+            btnServiceManagement.Visible = true;
+        }
     }
 
     private void MainDashboardForm_Resize(object sender, EventArgs e)
@@ -319,7 +304,7 @@ public partial class MainDashboardForm : Form
 
     private void UpdateSummary()
     {
-        // Dữ liệu giả lập - thay bằng dữ liệu thực từ database
+        // Mock data - replace with real data from database
         lblAvailableRooms.Text = "Available Rooms: 10";
         lblBookingsToday.Text = "Bookings Today: 5";
     }
@@ -332,6 +317,8 @@ public partial class MainDashboardForm : Form
 
     private Bitmap CreateGradientBackground()
     {
+        if (this.ClientSize.Width <= 0 || this.ClientSize.Height <= 0)
+            return null;
         Bitmap bitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
         using (Graphics g = Graphics.FromImage(bitmap))
         {
